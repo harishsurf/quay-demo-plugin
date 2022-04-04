@@ -5,6 +5,7 @@ import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-serv
 import * as path from "path";
 import { ConsoleRemotePlugin } from "@openshift-console/dynamic-plugin-sdk-webpack";
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
@@ -41,6 +42,27 @@ const config: Configuration = {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+            {
+                loader: 'style-loader',
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    sourceMap: true,
+                },
+            },
+            {
+                loader: 'sass-loader',
+                options: {
+                    sourceMap: true,
+                },
+            },
+        ],
+      },
+      {
         test: /\.(png|jpg|jpeg|gif|svg|woff2?|ttf|eot|otf)(\?.*$|$)/,
         type: 'asset/resource',
         generator: {
@@ -69,7 +91,12 @@ const config: Configuration = {
       writeToDisk: true,
     },
   },
-  plugins: [new ConsoleRemotePlugin()],
+  plugins: [
+    new ConsoleRemotePlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve(__dirname, 'locales'), to: 'locales' }],
+    }),
+  ],
   devtool: "source-map",
   optimization: {
     chunkIds: "named",

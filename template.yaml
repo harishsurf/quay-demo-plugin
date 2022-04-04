@@ -143,3 +143,10 @@ objects:
         namespace: '${NAMESPACE}'
         port: 9443
         basePath: '/'
+      proxy:
+        - type: Service
+          alias: quay-api
+          service:
+            name: proxy
+            namespace: '${NAMESPACE}'
+            port: 8443  

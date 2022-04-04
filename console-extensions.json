@@ -3,18 +3,39 @@
     "type": "console.page/route",
     "properties": {
       "exact": true,
-      "path": "/example",
-      "component": { "$codeRef": "ExamplePage" }
+      "path": "/quay/namespaces",
+      "component": { "$codeRef": "Namespaces" }
     }
   },
   {
     "type": "console.navigation/href",
     "properties": {
-      "id": "example",
-      "name": "Plugin Example",
-      "href": "/example",
+      "id": "quaynamespaces",
+      "name": "Quay Namespaces",
+      "href": "/quay/namespaces",
       "perspective": "admin",
       "section": "home"
+    }
+  }, 
+  {
+    "type": "console.page/route",
+    "properties": {
+      "exact": true,
+      "path": "/quay/namespaces/builds",
+      "component": { "$codeRef": "Builds" }
+    }
+  },
+  {
+    "type": "console.page/resource/tab",
+    "properties": {
+        "name": "Example Tab",
+        "href": "example",
+        "model": {
+            "group": "core",
+            "version": "v1",
+            "kind": "Pod"
+        },
+        "component": { "$codeRef": "ExampleTab" }
     }
   }
 ]
